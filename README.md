@@ -74,6 +74,9 @@ are reserved. A new theme gets a new id.
 1. **No code?** Open an issue:
    [new template](https://github.com/rodrigovirgilio/animated-motion-diagram-gallery/issues/new?template=template.yml)
    or [new theme](https://github.com/rodrigovirgilio/animated-motion-diagram-gallery/issues/new?template=theme.yml).
+   A **Triage** workflow validates the pasted JSON automatically: it labels the
+   issue `ready` (valid) or `needs-changes` (with the exact errors), and posts a
+   verdict comment.
 2. **With code:**
    ```bash
    git clone https://github.com/rodrigovirgilio/animated-motion-diagram-gallery.git

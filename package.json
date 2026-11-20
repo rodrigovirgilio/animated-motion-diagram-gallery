@@ -13,7 +13,7 @@
     "manifest:check": "node scripts/manifest.mjs --check",
     "sync": "node scripts/sync-supabase.mjs",
     "mock": "node scripts/mock-supabase.mjs",
-    "test": "node --test scripts/lib.test.mjs",
+    "test": "node --test scripts/lib.test.mjs scripts/triage.test.mjs",
     "check": "npm run validate && npm run manifest:check && npm test"
   },
   "keywords": [
