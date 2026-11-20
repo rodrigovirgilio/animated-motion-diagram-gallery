@@ -12,16 +12,20 @@ everyone else contributes through a fork and a pull request.
 animated-motion-diagram-gallery/
 ├── templates/
 │   ├── lego/nginx.json
+│   ├── lego/feature-flag-rollout.json
 │   ├── terminal/cicd.json
 │   ├── matrix/oauth.json
 │   ├── neon/queue.json
 │   └── gta/webhook-retries.json
 ├── themes/
-│   └── blueprint.json
+│   ├── blueprint.json
+│   └── papercut.json
 ├── manifest.json          # generated index used by the app as a fallback
 ├── supabase/schema.sql    # tables + row-level security
 └── scripts/               # validate, manifest, sync, local mock
 ```
+
+It ships the four templates that are built into the app plus two community examples.
 
 ## Templates vs. themes
 
