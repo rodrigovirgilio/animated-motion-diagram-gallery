@@ -9,6 +9,13 @@
       "path": "templates/gta/webhook-retries.json"
     },
     {
+      "slug": "feature-flag-rollout",
+      "name": "Feature flag rollout",
+      "description": "Edge → flag service → v2, while the rest of the traffic stays on v1.",
+      "theme": "lego",
+      "path": "templates/lego/feature-flag-rollout.json"
+    },
+    {
       "slug": "nginx",
       "name": "NGINX request path",
       "description": "Client → NGINX → app → cache / database.",
@@ -42,6 +49,11 @@
       "id": "blueprint",
       "name": "Blueprint",
       "path": "themes/blueprint.json"
+    },
+    {
+      "id": "papercut",
+      "name": "Papercut",
+      "path": "themes/papercut.json"
     }
   ]
 }
