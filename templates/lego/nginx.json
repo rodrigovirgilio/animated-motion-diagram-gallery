@@ -1,0 +1,175 @@
+{
+  "slug": "nginx",
+  "name": "NGINX request path",
+  "description": "Client → NGINX → app → cache / database.",
+  "theme": "lego",
+  "data": {
+    "title": "How NGINX routes a request",
+    "subtitle": "A 25-second explainer of the request path",
+    "nodes": [
+      {
+        "id": "client",
+        "kind": "client",
+        "label": "Client",
+        "x": 215,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "gateway",
+        "kind": "gateway",
+        "label": "NGINX",
+        "x": 625,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "app",
+        "kind": "server",
+        "label": "App server",
+        "x": 1040,
+        "y": 300,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "cache",
+        "kind": "cache",
+        "label": "Redis cache",
+        "x": 1395,
+        "y": 300,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "db",
+        "kind": "database",
+        "label": "PostgreSQL",
+        "x": 1040,
+        "y": 645,
+        "w": 210,
+        "h": 96
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "from": "client",
+        "to": "gateway"
+      },
+      {
+        "id": "e2",
+        "from": "gateway",
+        "to": "app"
+      },
+      {
+        "id": "e3",
+        "from": "app",
+        "to": "cache"
+      },
+      {
+        "id": "e4",
+        "from": "app",
+        "to": "db"
+      }
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "reveal",
+        "nodes": [
+          "client"
+        ],
+        "dur": 1.7,
+        "text": "A user sends a request"
+      },
+      {
+        "id": "s2",
+        "kind": "reveal",
+        "nodes": [
+          "gateway"
+        ],
+        "dur": 1.7,
+        "text": "NGINX is the public entry point"
+      },
+      {
+        "id": "s3",
+        "kind": "travel",
+        "edge": "e1",
+        "dots": 3,
+        "dur": 2.2,
+        "text": "The request travels over HTTPS"
+      },
+      {
+        "id": "s4",
+        "kind": "travel",
+        "edge": "e2",
+        "dots": 3,
+        "dur": 2.2,
+        "text": "NGINX forwards it upstream"
+      },
+      {
+        "id": "s5",
+        "kind": "reveal",
+        "nodes": [
+          "app"
+        ],
+        "dur": 1.7,
+        "text": "The app server handles the logic"
+      },
+      {
+        "id": "s6",
+        "kind": "travel",
+        "edge": "e3",
+        "dots": 3,
+        "dur": 2,
+        "text": "It checks the cache first"
+      },
+      {
+        "id": "s7",
+        "kind": "reveal",
+        "nodes": [
+          "cache"
+        ],
+        "dur": 1.6
+      },
+      {
+        "id": "s8",
+        "kind": "pulse",
+        "nodes": [
+          "cache"
+        ],
+        "dur": 2,
+        "text": "Cache hit: response in ~1 ms"
+      },
+      {
+        "id": "s9",
+        "kind": "travel",
+        "edge": "e4",
+        "dots": 3,
+        "dur": 2,
+        "text": "Cache miss: it queries the database"
+      },
+      {
+        "id": "s10",
+        "kind": "reveal",
+        "nodes": [
+          "db"
+        ],
+        "dur": 1.6
+      },
+      {
+        "id": "s11",
+        "kind": "pulse",
+        "nodes": [
+          "db"
+        ],
+        "dur": 2.6,
+        "text": "The result streams back to the user"
+      }
+    ],
+    "theme": "lego"
+  }
+}

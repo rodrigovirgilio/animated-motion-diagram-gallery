@@ -1,0 +1,84 @@
+name: New template
+description: Propose a diagram for the gallery
+title: "[template] "
+labels: ["template"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing! A maintainer will turn the accepted suggestion into a
+        pull request under `templates/<theme>/<slug>.json`. Only reviewed merges reach
+        the app gallery.
+
+  - type: input
+    id: slug
+    attributes:
+      label: Slug
+      description: Lowercase, 3-40 chars, a-z, 0-9 and dashes. Example: webhook-retries
+      placeholder: webhook-retries
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: 1-80 characters, shown on the card.
+      placeholder: Webhook retries with a dead-letter queue
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: One line, max 200 characters.
+      placeholder: API → retry queue → worker → webhook, with exponential backoff and a DLQ.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: theme
+    attributes:
+      label: Theme
+      description: The theme used by the diagram. Pick "Other" if it uses a theme proposed in this issue.
+      options:
+        - lego
+        - sketch
+        - neon
+        - terminal
+        - matrix
+        - gta
+        - Other (new theme)
+    validations:
+      required: true
+
+  - type: textarea
+    id: diagram
+    attributes:
+      label: Diagram JSON
+      description: Export the diagram in the app (Save .json) and paste the full JSON here.
+      render: json
+      placeholder: |
+        {
+          "title": "...",
+          "subtitle": "...",
+          "nodes": [],
+          "edges": [],
+          "steps": [],
+          "theme": "lego"
+        }
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: This is my own work and I agree to publish it under the MIT license.
+          required: true
+        - label: The JSON has at least 2 nodes and 1 step, with no missing edge/step references.
+          required: true
+        - label: I did not include tokens, keys, personal data or external assets.
+          required: true

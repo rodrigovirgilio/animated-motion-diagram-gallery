@@ -1,0 +1,137 @@
+{
+  "slug": "cicd",
+  "name": "CI/CD pipeline",
+  "description": "Commit → build → tests → deploy, with a travelling packet.",
+  "theme": "terminal",
+  "data": {
+    "title": "How a commit reaches production",
+    "subtitle": "Build, test and deploy in one pipeline",
+    "nodes": [
+      {
+        "id": "repo",
+        "kind": "file",
+        "label": "Repository",
+        "x": 170,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "build",
+        "kind": "server",
+        "label": "Build",
+        "x": 560,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "test",
+        "kind": "server",
+        "label": "Tests",
+        "x": 950,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "deploy",
+        "kind": "cloud",
+        "label": "Production",
+        "x": 1340,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "from": "repo",
+        "to": "build"
+      },
+      {
+        "id": "e2",
+        "from": "build",
+        "to": "test"
+      },
+      {
+        "id": "e3",
+        "from": "test",
+        "to": "deploy"
+      }
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "reveal",
+        "nodes": [
+          "repo"
+        ],
+        "dur": 1.6,
+        "text": "Developer pushes a commit"
+      },
+      {
+        "id": "s2",
+        "kind": "travel",
+        "edge": "e1",
+        "dots": 3,
+        "dur": 1.9,
+        "text": "CI picks up the change"
+      },
+      {
+        "id": "s3",
+        "kind": "reveal",
+        "nodes": [
+          "build"
+        ],
+        "dur": 1.6,
+        "text": "Image is built"
+      },
+      {
+        "id": "s4",
+        "kind": "travel",
+        "edge": "e2",
+        "dots": 3,
+        "dur": 1.9,
+        "text": "Tests run against it"
+      },
+      {
+        "id": "s5",
+        "kind": "reveal",
+        "nodes": [
+          "test"
+        ],
+        "dur": 1.6,
+        "text": "All green"
+      },
+      {
+        "id": "s6",
+        "kind": "travel",
+        "edge": "e3",
+        "dots": 3,
+        "dur": 1.9,
+        "text": "Artifact is published"
+      },
+      {
+        "id": "s7",
+        "kind": "reveal",
+        "nodes": [
+          "deploy"
+        ],
+        "dur": 1.6,
+        "text": "Rolling deploy starts"
+      },
+      {
+        "id": "s8",
+        "kind": "pulse",
+        "nodes": [
+          "deploy"
+        ],
+        "dur": 2.2,
+        "text": "Traffic on the new version"
+      }
+    ],
+    "theme": "terminal"
+  }
+}

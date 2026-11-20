@@ -1,0 +1,66 @@
+name: New theme
+description: Propose a visual theme for the gallery
+title: "[theme] "
+labels: ["theme"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The app exports the current theme as JSON (Inspector → Community themes →
+        Export theme JSON). A maintainer will turn the accepted suggestion into
+        `themes/<id>.json`. Only reviewed merges reach the app gallery.
+
+  - type: input
+    id: id
+    attributes:
+      label: Theme id
+      description: Lowercase, 3-40 chars, a-z, 0-9 and dashes. Cannot be sketch, lego, neon, terminal, matrix or gta.
+      placeholder: blueprint
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: Theme name
+      description: 1-40 characters, shown in the theme picker.
+      placeholder: Blueprint
+    validations:
+      required: true
+
+  - type: textarea
+    id: json
+    attributes:
+      label: Theme JSON
+      description: Paste the full JSON exported by the app.
+      render: json
+      placeholder: |
+        {
+          "id": "blueprint",
+          "name": "Blueprint",
+          "bg": "#081826",
+          "palette": ["#22d3ee", "#fbbf24"]
+        }
+    validations:
+      required: true
+
+  - type: input
+    id: inspiration
+    attributes:
+      label: Inspiration (optional)
+      description: What should this theme evoke? One line.
+      placeholder: Technical blueprint / cyanotype
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: This is my own work and I agree to publish it under the MIT license.
+          required: true
+        - label: The id is unique and the palette has at least 2 colors.
+          required: true
+        - label: Fonts use a single family per field (Canvas 2D ignores fallback lists).
+          required: true
+        - label: I did not include tokens, keys, personal data or external assets.
+          required: true

@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "slug": "webhook-retries",
+      "name": "Webhook retries with a dead-letter queue",
+      "description": "API → retry queue → worker → webhook, with exponential backoff and a DLQ.",
+      "theme": "gta",
+      "path": "templates/gta/webhook-retries.json"
+    },
+    {
+      "slug": "nginx",
+      "name": "NGINX request path",
+      "description": "Client → NGINX → app → cache / database.",
+      "theme": "lego",
+      "path": "templates/lego/nginx.json"
+    },
+    {
+      "slug": "oauth",
+      "name": "OAuth 2.0 authorization code",
+      "description": "User → client → authorization server → API.",
+      "theme": "matrix",
+      "path": "templates/matrix/oauth.json"
+    },
+    {
+      "slug": "queue",
+      "name": "Queue-based worker",
+      "description": "API → queue → worker → database, decoupled.",
+      "theme": "neon",
+      "path": "templates/neon/queue.json"
+    },
+    {
+      "slug": "cicd",
+      "name": "CI/CD pipeline",
+      "description": "Commit → build → tests → deploy, with a travelling packet.",
+      "theme": "terminal",
+      "path": "templates/terminal/cicd.json"
+    }
+  ],
+  "themes": [
+    {
+      "id": "blueprint",
+      "name": "Blueprint",
+      "path": "themes/blueprint.json"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "slug": "oauth",
+  "name": "OAuth 2.0 authorization code",
+  "description": "User → client → authorization server → API.",
+  "theme": "matrix",
+  "data": {
+    "title": "OAuth 2.0 authorization code flow",
+    "subtitle": "Delegated access without sharing the password",
+    "nodes": [
+      {
+        "id": "user",
+        "kind": "client",
+        "label": "User",
+        "x": 170,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "app",
+        "kind": "server",
+        "label": "Client app",
+        "x": 560,
+        "y": 300,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "auth",
+        "kind": "server",
+        "label": "Authorization server",
+        "x": 950,
+        "y": 300,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "api",
+        "kind": "server",
+        "label": "Resource API",
+        "x": 1340,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "from": "user",
+        "to": "app"
+      },
+      {
+        "id": "e2",
+        "from": "app",
+        "to": "auth"
+      },
+      {
+        "id": "e3",
+        "from": "auth",
+        "to": "app",
+        "curve": -0.55,
+        "dashed": true
+      },
+      {
+        "id": "e4",
+        "from": "app",
+        "to": "api"
+      }
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "reveal",
+        "nodes": [
+          "user"
+        ],
+        "dur": 1.5,
+        "text": "User opens the client app"
+      },
+      {
+        "id": "s2",
+        "kind": "travel",
+        "edge": "e1",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "Starts the login"
+      },
+      {
+        "id": "s3",
+        "kind": "reveal",
+        "nodes": [
+          "app"
+        ],
+        "dur": 1.5,
+        "text": "Client redirects to the auth server"
+      },
+      {
+        "id": "s4",
+        "kind": "travel",
+        "edge": "e2",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "Authorization request"
+      },
+      {
+        "id": "s5",
+        "kind": "reveal",
+        "nodes": [
+          "auth"
+        ],
+        "dur": 1.5,
+        "text": "User consents"
+      },
+      {
+        "id": "s6",
+        "kind": "pulse",
+        "nodes": [
+          "auth"
+        ],
+        "dur": 2,
+        "text": "Authorization code issued"
+      },
+      {
+        "id": "s7",
+        "kind": "travel",
+        "edge": "e3",
+        "dots": 2,
+        "dur": 1.8,
+        "text": "Code exchanges for a token"
+      },
+      {
+        "id": "s8",
+        "kind": "travel",
+        "edge": "e4",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "Authorized API call"
+      },
+      {
+        "id": "s9",
+        "kind": "reveal",
+        "nodes": [
+          "api"
+        ],
+        "dur": 1.5,
+        "text": "Protected resource responds"
+      }
+    ],
+    "theme": "matrix"
+  }
+}

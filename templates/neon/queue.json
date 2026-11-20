@@ -1,0 +1,147 @@
+{
+  "slug": "queue",
+  "name": "Queue-based worker",
+  "description": "API → queue → worker → database, decoupled.",
+  "theme": "neon",
+  "data": {
+    "title": "Asynchronous job processing",
+    "subtitle": "The API responds fast and the queue absorbs the spikes",
+    "nodes": [
+      {
+        "id": "api",
+        "kind": "server",
+        "label": "API",
+        "x": 170,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "queue",
+        "kind": "queue",
+        "label": "Queue",
+        "x": 560,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "worker",
+        "kind": "server",
+        "label": "Worker",
+        "x": 950,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "db",
+        "kind": "database",
+        "label": "Database",
+        "x": 1340,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "from": "api",
+        "to": "queue"
+      },
+      {
+        "id": "e2",
+        "from": "queue",
+        "to": "worker",
+        "flow": true,
+        "flowSpeed": 0.6
+      },
+      {
+        "id": "e3",
+        "from": "worker",
+        "to": "db"
+      }
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "reveal",
+        "nodes": [
+          "api"
+        ],
+        "dur": 1.6,
+        "text": "Request arrives"
+      },
+      {
+        "id": "s2",
+        "kind": "reveal",
+        "nodes": [
+          "queue"
+        ],
+        "dur": 1.6,
+        "text": "Job is enqueued"
+      },
+      {
+        "id": "s3",
+        "kind": "travel",
+        "edge": "e1",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "API returns without waiting"
+      },
+      {
+        "id": "s4",
+        "kind": "pulse",
+        "nodes": [
+          "queue"
+        ],
+        "dur": 2,
+        "text": "Backlog absorbs the spike"
+      },
+      {
+        "id": "s5",
+        "kind": "reveal",
+        "nodes": [
+          "worker"
+        ],
+        "dur": 1.6,
+        "text": "Worker picks jobs up"
+      },
+      {
+        "id": "s6",
+        "kind": "travel",
+        "edge": "e2",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "Processes at its own pace"
+      },
+      {
+        "id": "s7",
+        "kind": "travel",
+        "edge": "e3",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "Result is persisted"
+      },
+      {
+        "id": "s8",
+        "kind": "reveal",
+        "nodes": [
+          "db"
+        ],
+        "dur": 1.5
+      },
+      {
+        "id": "s9",
+        "kind": "pulse",
+        "nodes": [
+          "db"
+        ],
+        "dur": 2,
+        "text": "Job done"
+      }
+    ],
+    "theme": "neon"
+  }
+}

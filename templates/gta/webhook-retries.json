@@ -1,0 +1,140 @@
+{
+  "slug": "webhook-retries",
+  "name": "Webhook retries with a dead-letter queue",
+  "description": "API → retry queue → worker → webhook, with exponential backoff and a DLQ.",
+  "theme": "gta",
+  "data": {
+    "title": "Webhook retries without losing the event",
+    "subtitle": "Exponential backoff, then a dead-letter queue",
+    "nodes": [
+      {
+        "id": "api",
+        "kind": "server",
+        "label": "API",
+        "x": 140,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "queue",
+        "kind": "queue",
+        "label": "Retry queue",
+        "x": 470,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "worker",
+        "kind": "server",
+        "label": "Worker",
+        "x": 800,
+        "y": 450,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "webhook",
+        "kind": "cloud",
+        "label": "Webhook",
+        "x": 1170,
+        "y": 290,
+        "w": 210,
+        "h": 96
+      },
+      {
+        "id": "dlq",
+        "kind": "database",
+        "label": "Dead letters",
+        "x": 1170,
+        "y": 620,
+        "w": 210,
+        "h": 96
+      }
+    ],
+    "edges": [
+      { "id": "e1", "from": "api", "to": "queue" },
+      { "id": "e2", "from": "queue", "to": "worker" },
+      { "id": "e3", "from": "worker", "to": "webhook" },
+      { "id": "e4", "from": "worker", "to": "dlq", "dashed": true }
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "reveal",
+        "nodes": ["api"],
+        "dur": 1.5,
+        "text": "Request accepted"
+      },
+      {
+        "id": "s2",
+        "kind": "travel",
+        "edge": "e1",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "Job written to the retry queue"
+      },
+      {
+        "id": "s3",
+        "kind": "reveal",
+        "nodes": ["queue"],
+        "dur": 1.5,
+        "text": "Exponential backoff schedule"
+      },
+      {
+        "id": "s4",
+        "kind": "reveal",
+        "nodes": ["worker"],
+        "dur": 1.5,
+        "text": "Worker picks the job up"
+      },
+      {
+        "id": "s5",
+        "kind": "travel",
+        "edge": "e2",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "Attempt #1"
+      },
+      {
+        "id": "s6",
+        "kind": "reveal",
+        "nodes": ["webhook"],
+        "dur": 1.5,
+        "text": "Webhook returns 500"
+      },
+      {
+        "id": "s7",
+        "kind": "travel",
+        "edge": "e3",
+        "dots": 3,
+        "dur": 1.8,
+        "text": "Retry #3 after 4 minutes"
+      },
+      {
+        "id": "s8",
+        "kind": "pulse",
+        "nodes": ["webhook"],
+        "dur": 2.0,
+        "text": "Finally a 200"
+      },
+      {
+        "id": "s9",
+        "kind": "reveal",
+        "nodes": ["dlq"],
+        "dur": 1.5,
+        "text": "Still failing? Dead-lettered"
+      },
+      {
+        "id": "s10",
+        "kind": "travel",
+        "edge": "e4",
+        "dots": 2,
+        "dur": 1.8,
+        "text": "Nothing is lost silently"
+      }
+    ],
+    "theme": "gta"
+  }
+}

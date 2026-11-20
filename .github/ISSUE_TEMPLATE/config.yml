@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Open the editor
+    url: https://animated-motion-diagram.netlify.app
+    about: Build the diagram or export the theme JSON before opening an issue.
+  - name: Read the contribution guide
+    url: https://github.com/rodrigovirgilio/animated-motion-diagram-gallery/blob/main/CONTRIBUTING.md
+    about: Folder structure, validation and how publishing works.
