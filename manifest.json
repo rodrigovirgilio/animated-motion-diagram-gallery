@@ -54,6 +54,11 @@
       "id": "papercut",
       "name": "Papercut",
       "path": "themes/papercut.json"
+    },
+    {
+      "id": "sunset",
+      "name": "Sunset",
+      "path": "themes/sunset.json"
     }
   ]
 }
