@@ -1,0 +1,57 @@
+name: Triage submission
+
+# Valida o JSON de uma issue de submissão (theme/template) e aplica o veredito:
+#   - válido   -> label `ready`, comentário "awaiting adoption"
+#   - inválido -> label `needs-changes`, comentário com os erros
+#
+# Segurança: o corpo da issue é dado não confiável. Ele é apenas parseado e
+# inspecionado pela mesma validação do CI — nunca executado. O token é o
+# `GITHUB_TOKEN` padrão, limitado a comentar/rotular issues.
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  triage:
+    # Pull requests também disparam o evento `issues`; só queremos issues reais.
+    if: ${{ !github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Extract issue body
+        run: jq -r '.issue.body' "$GITHUB_EVENT_PATH" > body.md
+
+      - name: Validate
+        id: triage
+        run: |
+          node scripts/triage-issue.mjs --comment-file comment.md < body.md > verdict.json
+          echo "ok=$(jq -r '.ok' verdict.json)" >> "$GITHUB_OUTPUT"
+          echo "kind=$(jq -r '.kind' verdict.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Mark ready
+        if: steps.triage.outputs.ok == 'true'
+        run: |
+          gh issue edit "${{ github.event.issue.number }}" --add-label ready || true
+          gh issue edit "${{ github.event.issue.number }}" --remove-label needs-changes || true
+
+      - name: Mark needs changes
+        if: steps.triage.outputs.ok == 'false'
+        run: |
+          gh issue edit "${{ github.event.issue.number }}" --add-label needs-changes || true
+          gh issue edit "${{ github.event.issue.number }}" --remove-label ready || true
+
+      - name: Comment verdict
+        if: github.event.action == 'opened'
+        run: gh issue comment "${{ github.event.issue.number }}" --body-file comment.md
